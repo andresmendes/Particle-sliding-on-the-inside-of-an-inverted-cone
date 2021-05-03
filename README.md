@@ -1,6 +1,6 @@
 [![View Particle sliding on the inside of an inverted cone on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/90671-particle-sliding-on-the-inside-of-an-inverted-cone)
 # Particle sliding on the inside of an inverted cone
-Animation of a particle sliding with friction on the inside of an inverted cone.
+Simulation and animation of a particle sliding with friction on the inside of an inverted cone.
 
 Watch animation on YouTube: https://youtu.be/ngWGgQUHZkg
 
