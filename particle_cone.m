@@ -9,7 +9,7 @@ clear ; close all ; clc
 %% Parameters
 
 m = 1;          % Mass                      [kg]
-c = 0.1;        % Drag coefficient          [-]
+c = 0.05;        % Drag coefficient          [-]
 g = 9.81;       % Gravity                   [m/s2]
 
 parameters = [m c g];
@@ -46,35 +46,52 @@ y = r.*sin(th);
 L = 2.1;            % Distance form center
 
 figure
-hold on ; grid on ; axis equal   
-set(gca,'xlim',[-L L],'ylim',[-L L],'zlim',[0 L],'CameraPosition',[-21.6164 -19.9472 12.3236])
+set(gcf,'Position',[50 50 1280 720]) % YouTube: 720p
+% set(gcf,'Position',[50 50 854 480]) % YouTube: 480p
+% set(gcf,'Position',[50 50 640 640]) % Instagram
 
 % Create and open video writer object
-v = VideoWriter('particle_cone.avi');
+v = VideoWriter('particle_cone.mp4','MPEG-4');
 v.Quality = 100;
+v.FrameRate = fR;
 open(v);
 
 % Generating frames
 for i=1:length(tS)
     cla
 
+    XYmin =-2;
+    XYmax = 4;
+    Zmin = -0.5;
+    Zmax = 2.5;
+    steptick = 1;
+    
+    hold on ; grid on ; axis equal   
+    set(gca,'xlim',[XYmin XYmax],'ylim',[XYmin XYmax],'zlim',[Zmin Zmax],'CameraPosition',[-27.0446  -27.4492   14.0294])
+    set(gca,'XTick',XYmin:steptick:XYmax,'YTick',XYmin:steptick:XYmax,'ZTick',Zmin:steptick:Zmax)
+    set(gca,'XTickLabel',[],'YTickLabel',[],'ZTickLabel',[])
+
     R = r0;    % Radius
     H = r0;    % Height
     N = 50;     % Number of points
     [xCy, yCy, zCy] = cylinder([0 R], N);
     m = mesh(xCy, yCy, H*zCy);
-    set(m,'edgealpha',0,'facecolor',[1 0 0],'facealpha',0.5)
+    set(m,'edgealpha',0,'facecolor',[1 0 0],'facealpha',0.2)
 
     % Main particle
     plot3(x(1:i),y(1:i),z(1:i),'b')
-    plot3(x(i),y(i),z(i),'r*')
+    plot3(x(i),y(i),z(i),'ko','MarkerFaceColor','k','MarkerSize',5)
+    
+    gray_color = [150 150 150]/255;
     % Projections
-    plot3(x(1:i),y(1:i),zeros(i,1),'g')
-    plot3(x(i),y(i),0,'r*')
-    plot3(ones(i,1)*L,y(1:i),z(1:i),'g')
-    plot3(L,y(i),r(i),'r*')
-    plot3(x(1:i),ones(i,1)*L,z(1:i),'g')
-    plot3(x(i),L,z(i),'r*')
+    plot3(x(1:i),y(1:i),Zmin*ones(i,1),'g')
+    plot3(x(i),y(i),Zmin,'o','Color',gray_color,'MarkerFaceColor',gray_color,'MarkerSize',5)
+    
+    plot3(XYmax*ones(i,1),y(1:i),z(1:i),'g')
+    plot3(XYmax,y(i),r(i),'o','Color',gray_color,'MarkerFaceColor',gray_color,'MarkerSize',5)
+    
+    plot3(x(1:i),XYmax*ones(i,1),z(1:i),'g')
+    plot3(x(i),XYmax,z(i),'o','Color',gray_color,'MarkerFaceColor',gray_color,'MarkerSize',5)
 
     frame = getframe(gcf);
     writeVideo(v,frame);
