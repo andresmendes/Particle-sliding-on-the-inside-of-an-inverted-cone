@@ -1,6 +1,6 @@
 %% Particle sliding on the inside of an inverted cone
-% Simulation and animation of a particle sliding with friction on the
-% inside of an inverted cone.
+% Simulation and animation of a particle sliding on the inside of an
+% inverted cone with projections.
 %
 %%
 
